@@ -8,6 +8,10 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -36,6 +40,9 @@ import java.util.StringTokenizer;
 public class Announcements extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ViewPager mViewPager;
+    private Announcements.SectionsPagerAdapter mSectionsPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +62,20 @@ public class Announcements extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        File directory = new File(Environment.getExternalStorageDirectory() + "/Science Up");
-        if (!directory.exists()) directory.mkdirs();
+        mSectionsPagerAdapter = new Announcements.SectionsPagerAdapter(getSupportFragmentManager());
 
-        populateListView();
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = findViewById(R.id.container);
+
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        File directory = new File(Environment.getExternalStorageDirectory() + File.separator + "Science Up");
+        if (!directory.exists()) directory.mkdirs();
 
         int category;
         Intent i = getIntent();
@@ -113,43 +130,11 @@ public class Announcements extends AppCompatActivity
                         catch(IOException e) {
                             Toast.makeText(Announcements.this, "Error writing: "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                        populateListView();
                     }
                 })
                 .setNegativeButton("Cancel", null)
                 .create();
         dialog.show();
-    }
-
-    void populateListView() {
-
-        String s="";
-        try {
-            FileReader fr=new FileReader(Environment.getExternalStorageDirectory()+ File.separator+"Science Up" + File.separator + "Announcements.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String t;
-            int c=0;
-            while((t = br.readLine()) != null)
-            {
-                s=s+"\n"+t;
-                c++;
-            }
-            StringTokenizer st = new StringTokenizer(s,"\n");
-            String[]list=new String[c];
-            for(int i=0;i<c;i++) list[i]=st.nextToken();
-            br.close();
-            fr.close();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    this,
-                    R.layout.card_view,
-                    list
-            );
-            ListView list_view = findViewById(R.id.list);
-            list_view.setAdapter(adapter);
-        }
-        catch(IOException e) {
-            Toast.makeText(this, "Error reading "+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -207,5 +192,39 @@ public class Announcements extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            switch (position) {
+                case 0:
+                    return new Subject_1();
+                case 1:
+                    return new Subject_2();
+                case 2:
+                    return new Subject_3();
+                case 3:
+                    return new Subject_4();
+                case 4:
+                    return new Subject_5();
+                default:
+                    return null;
+            }
+        }
+
+
+        @Override
+        public int getCount() {
+            // Show 5 total pages.
+            return 5;
+        }
     }
 }
