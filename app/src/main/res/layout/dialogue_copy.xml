@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_move"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/dialog_shift_query"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <RadioButton
+        android:id="@+id/radio_q1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_move"
+        android:layout_marginStart="40dp"
+        android:text="@string/day_1" />
+
+    <RadioButton
+        android:id="@+id/radio_q2"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_move"
+        android:layout_toEndOf="@+id/radio_q1"
+        android:text="@string/day_2" />
+
+    <RadioButton
+        android:id="@+id/radio_q3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_q1"
+        android:layout_marginStart="40dp"
+        android:text="@string/day_3" />
+
+    <RadioButton
+        android:id="@+id/radio_q4"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_q2"
+        android:layout_toEndOf="@+id/radio_q3"
+        android:text="@string/day_4" />
+    <RadioButton
+        android:id="@+id/radio_q5"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_q3"
+        android:layout_marginStart="40dp"
+        android:text="@string/day_5" />
+
+    <RadioButton
+        android:id="@+id/radio_q6"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_q4"
+        android:layout_toEndOf="@+id/radio_q3"
+        android:text="@string/day_6" />
+    <RadioButton
+        android:id="@+id/radio_q7"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_q5"
+        android:layout_marginStart="40dp"
+        android:text="@string/day_7" />
+
+
+    <Button
+        android:id="@+id/cancel_move"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_q7"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="@string/cancel"
+        android:textColor="?attr/colorAccent"/>
+
+    <Button
+        android:id="@+id/shift"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_q7"
+        android:layout_gravity="center"
+        android:layout_marginStart="0.5dp"
+        android:layout_toEndOf="@+id/cancel_move"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="@string/shift"
+        android:textColor="?attr/colorAccent"/>
+
+</RelativeLayout>
