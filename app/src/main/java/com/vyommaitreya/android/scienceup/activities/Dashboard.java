@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +18,7 @@ import com.vyommaitreya.android.scienceup.R;
 
 public class Dashboard extends AppCompatActivity {
 
-    CardView chat, academics, study_material, attendance, timetable, feedback, trends, campus_radio, settings;
+    CardView chat, academics, study_material, attendance, timetable, feedback, trends, campus_radio, settings, sos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class Dashboard extends AppCompatActivity {
         trends = findViewById(R.id.trends);
         campus_radio = findViewById(R.id.campus_radio);
         settings = findViewById(R.id.settings);
+        sos = findViewById(R.id.sos);
 
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +133,13 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Dashboard.this, Settings.class));
+            }
+        });
+
+        sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Dashboard.this, SOS.class));
             }
         });
 

@@ -20,15 +20,18 @@ public class AddDialogue extends Dialog implements
 
     public Activity c;
     public Dialog d;
-    public Button done, cancel, from, to;
-    public EditText subjectName, room;
+    public Button done, cancel;
+    public EditText subjectName, room, from, to;
 
     String list[];
     int index;
+    private String day, subject;
+    private boolean isEdit; //To check is dialog is opening as an edit dialog
 
     public AddDialogue(Activity a) {
         super(a);
         this.c = a;
+        isEdit = false;
     }
 
     @Override
@@ -50,6 +53,22 @@ public class AddDialogue extends Dialog implements
         room = findViewById(R.id.edit_text_room);
     }
 
+    public void setData(String from, String to, String subjectName, String room) {
+        this.from.setText(from);
+        this.to.setText(to);
+        this.subjectName.setText(subjectName);
+        subject = subjectName;
+        this.room.setText(room);
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public void setIsEdit(boolean isEdit) {
+        this.isEdit = isEdit;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -60,26 +79,35 @@ public class AddDialogue extends Dialog implements
 
                     String selection = TimetableContract.ListEntry.COLUMN_NAME_SUBJECT + " LIKE ?";*/
 
-                    String day;
+                    /*String day;
                     if(index==1) day="Monday";
                     else if(index==2) day="Tuesday";
                     else if(index==3) day="Wednesday";
                     else if(index==4) day="Thursday";
                     else if(index==5) day="Friday";
                     else if(index==6) day="Saturday";
-                    else day="Sunday";
+                    else day="Sunday";*/
                     try {
                         TimetableDbHelper mDbHelper = new TimetableDbHelper(c);
                         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+                        if(isEdit) {
+                            String selection = TimetableContract.ListEntry.COLUMN_NAME_SUBJECT + " LIKE ? AND " + TimetableContract.ListEntry.COLUMN_NAME_DAY + " LIKE ?";
+
+                            String[] selectionArgs = {subject, day + ""};
+
+                            int deletedRows = db.delete(TimetableContract.ListEntry.TABLE_NAME, selection, selectionArgs);
+                        }
+
                         ContentValues values = new ContentValues();
-                        values.put(TimetableContract.ListEntry.COLUMN_NAME_DAY, day);
-                        values.put(TimetableContract.ListEntry.COLUMN_NAME_TIME, from.getText().toString()+" - "+to.getText().toString());
-                        values.put(TimetableContract.ListEntry.COLUMN_NAME_SUBJECT, subjectName.getText().toString()+"");
-                        values.put(TimetableContract.ListEntry.COLUMN_NAME_ROOM, room.getText().toString()+"");
+                        values.put(TimetableContract.ListEntry.COLUMN_NAME_DAY, day.trim());
+                        values.put(TimetableContract.ListEntry.COLUMN_NAME_TIME, from.getText().toString().trim() + " - " + to.getText().toString().trim());
+                        values.put(TimetableContract.ListEntry.COLUMN_NAME_SUBJECT, subjectName.getText().toString().trim() + "");
+                        values.put(TimetableContract.ListEntry.COLUMN_NAME_ROOM, room.getText().toString().trim() + "");
 
                         // Insert the new row, returning the primary key value of the new row
                         long newRowId = db.insert(TimetableContract.ListEntry.TABLE_NAME, null, values);
+
 
                         db.close();
                         mDbHelper.close();

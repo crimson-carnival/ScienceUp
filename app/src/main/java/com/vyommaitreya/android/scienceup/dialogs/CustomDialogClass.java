@@ -17,10 +17,11 @@ public class CustomDialogClass extends Dialog implements
 
     public Activity c;
     public Dialog d;
-    public Button shift, delete, edit;
+    public Button delete, edit;
     String text;
     String list[];
     int index, quad;
+    private String timings, subjectName, room, day;
 
     public CustomDialogClass(Activity a) {
         super(a);
@@ -34,13 +35,19 @@ public class CustomDialogClass extends Dialog implements
 
         setContentView(R.layout.dialogue);
 
-        shift = findViewById(R.id.shift);
         edit = findViewById(R.id.edit);
         delete = findViewById(R.id.delete);
-        shift.setOnClickListener(this);
+
         delete.setOnClickListener(this);
         edit.setOnClickListener(this);
 
+    }
+
+    public void setData(String timings, String subjectName, String room)
+    {
+        this.timings = timings;
+        this.subjectName = subjectName;
+        this.room = room;
     }
 
     void setText(String text) {
@@ -56,8 +63,8 @@ public class CustomDialogClass extends Dialog implements
         }
     }
 
-    void setIndex(int index) {
-        this.index = index;
+    public void setDay(String day) {
+        this.day = day;
     }
 
     void setQuad(int quad) {
@@ -67,39 +74,24 @@ public class CustomDialogClass extends Dialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.shift:
-                MoveDialog md = new MoveDialog(c);
-                md.show();
-                md.setArray(list);
-                md.setIndex(index);
-                md.setQuad(quad);
-                md.setOnDismissListener(new OnDismissListener() {
+            case R.id.edit:
+                AddDialogue ed = new AddDialogue(c);
+                ed.show();
+                ed.setDay(day);
+                ed.setIsEdit(true);
+                ed.setData(timings.substring(0,5),timings.substring(8,13),subjectName,room);
+                ed.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
                         dismiss();
                     }
                 });
                 break;
-            case R.id.edit:
-                /*EditDialog ed = new EditDialog(c);
-                ed.show();
-                ed.setArray(list);
-                ed.setText(text);
-                ed.setIndex(index);
-                ed.setQuad(quad);
-                ed.setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        dismiss();
-                    }
-                });*/
-                break;
             case R.id.delete:
                 DeleteDialog dd = new DeleteDialog(c);
+                dd.setDay(day);
                 dd.show();
-                dd.setArray(list);
-                dd.setIndex(index);
-                dd.setQuad(quad);
+                dd.setSubjectName(subjectName);
                 dd.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {

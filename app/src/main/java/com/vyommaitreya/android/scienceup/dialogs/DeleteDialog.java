@@ -19,7 +19,7 @@ public class DeleteDialog extends Dialog implements
     public Dialog d;
     public Button yes, no;
 
-    String list[];
+    private String subjectName, day;
     int index, quad;
 
     public DeleteDialog(Activity a) {
@@ -49,9 +49,9 @@ public class DeleteDialog extends Dialog implements
                     TimetableDbHelper mDbHelper = new TimetableDbHelper(getContext());
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-                    String selection = TimetableContract.ListEntry.COLUMN_NAME_SUBJECT + " LIKE ?";
+                    String selection = TimetableContract.ListEntry.COLUMN_NAME_SUBJECT + " LIKE ? AND " + TimetableContract.ListEntry.COLUMN_NAME_DAY + " LIKE ?";
 
-                    String[] selectionArgs = {list[index]};
+                    String[] selectionArgs = {subjectName + "", day + ""};
 
                     int deletedRows = db.delete(TimetableContract.ListEntry.TABLE_NAME, selection, selectionArgs);
                     db.close();
@@ -65,11 +65,8 @@ public class DeleteDialog extends Dialog implements
         dismiss();
     }
 
-    public void setArray(String[] list) {
-        this.list = new String[list.length];
-        for (int i = 0; i < list.length; i++) {
-            this.list[i] = list[i];
-        }
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     public void setIndex(int index) {
@@ -78,5 +75,9 @@ public class DeleteDialog extends Dialog implements
 
     public void setQuad(int quad) {
         this.quad = quad;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

@@ -34,27 +34,12 @@
         android:textColor="#000" />
 
     <Button
-        android:id="@+id/shift"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_dia"
-        android:layout_gravity="center"
-        android:background="@android:color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:text="@string/copy"
-        android:textColor="?attr/colorAccent" />
-
-    <Button
         android:id="@+id/edit"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_dia"
         android:layout_gravity="center"
         android:layout_marginStart="0.5dp"
-        android:layout_toEndOf="@+id/shift"
         android:background="@android:color/white"
         android:clickable="true"
         android:focusable="true"
@@ -65,7 +50,7 @@
 
     <Button
         android:id="@+id/delete"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_dia"
         android:layout_gravity="center"

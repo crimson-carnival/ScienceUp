@@ -92,6 +92,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vyommaitreya.android.scienceup.activities.Dashboard" />
         </activity>
+        <activity
+            android:name=".activities.SOS"
+            android:label="@string/title_activity_sos"
+            android:parentActivityName=".activities.Dashboard"
+            android:theme="@style/AppThemeTwo.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vyommaitreya.android.scienceup.activities.Dashboard" />
+        </activity>
     </application>
 
 </manifest>

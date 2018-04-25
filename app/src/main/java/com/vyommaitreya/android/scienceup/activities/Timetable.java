@@ -63,7 +63,17 @@ public class Timetable extends AppCompatActivity
             public void onClick(View view) {
                 //showAddItemDialog(Timetable.this);
                 AddDialogue addDialogue = new AddDialogue(Timetable.this);
-                addDialogue.setIndex(mViewPager.getCurrentItem() + 1);
+                int index = mViewPager.getCurrentItem() + 1;
+                String day;
+                if(index==1) day="Monday";
+                else if(index==2) day="Tuesday";
+                else if(index==3) day="Wednesday";
+                else if(index==4) day="Thursday";
+                else if(index==5) day="Friday";
+                else if(index==6) day="Saturday";
+                else day="Sunday";
+                addDialogue.setDay(day);
+                addDialogue.setIsEdit(false);
                 addDialogue.show();
 
                 addDialogue.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -135,69 +145,6 @@ public class Timetable extends AppCompatActivity
         }
     }
 
-    private void showAddItemDialog(final Context c) {
-        final EditText taskEditText = new EditText(c);
-        AlertDialog dialog = new AlertDialog.Builder(c)
-                .setTitle("Add a new task")
-                .setMessage("What do you want to do next?")
-                .setView(taskEditText)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String task = String.valueOf(taskEditText.getText());
-                        StringTokenizer st = new StringTokenizer(task,",");
-                        int item = mViewPager.getCurrentItem() + 1;
-                        String day;
-                        if(item==1) day="Monday";
-                        else if(item==2) day="Tuesday";
-                        else if(item==3) day="Wednesday";
-                        else if(item==4) day="Thursday";
-                        else if(item==5) day="Friday";
-                        else if(item==6) day="Saturday";
-                        else day="Sunday";
-                        try {
-                            TimetableDbHelper mDbHelper = new TimetableDbHelper(c);
-                            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-                            ContentValues values = new ContentValues();
-                            values.put(TimetableContract.ListEntry.COLUMN_NAME_DAY, day);
-                            values.put(TimetableContract.ListEntry.COLUMN_NAME_TIME, st.nextToken());
-                            values.put(TimetableContract.ListEntry.COLUMN_NAME_SUBJECT, st.nextToken());
-                            values.put(TimetableContract.ListEntry.COLUMN_NAME_ROOM, st.nextToken());
-
-                            // Insert the new row, returning the primary key value of the new row
-                            long newRowId = db.insert(TimetableContract.ListEntry.TABLE_NAME, null, values);
-                            mDbHelper.close();
-                            mDbHelper.close();
-                            /*FileWriter fw = new FileWriter(Environment.getExternalStorageDirectory() + File.separator + "Quadrants" + File.separator + "Quadrant " + item + ".txt", true);
-                            BufferedWriter bw = new BufferedWriter(fw);
-                            PrintWriter pw = new PrintWriter(bw);
-                            if (task.indexOf("\n") == -1 && task.length() > 0) pw.println(task);
-                            pw.close();
-                            bw.close();
-                            fw.close();*/
-                        } catch (Exception e) {
-                            Toast.makeText(Timetable.this, "Error writing: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-
-                        mSectionsPagerAdapter = new Timetable.SectionsPagerAdapter(getSupportFragmentManager());
-
-                        // Set up the ViewPager with the sections adapter.
-                        mViewPager = findViewById(R.id.container);
-                        mViewPager.setAdapter(mSectionsPagerAdapter);
-                        mViewPager.setCurrentItem(item - 1);
-
-                        TabLayout tabLayout = findViewById(R.id.tabs);
-
-                        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-                        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
-        dialog.show();
-    }
-
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -262,7 +209,7 @@ public class Timetable extends AppCompatActivity
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
-        Button v;
+        EditText v;
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
@@ -275,18 +222,24 @@ public class Timetable extends AppCompatActivity
                     DateFormat.is24HourFormat(getActivity()));
         }
 
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            v.setText(hourOfDay+":"+minute);
+        private String convertTime(String s) {
+            if(s.length()==1) return "0"+s;
+            else return s;
         }
 
-        public void setView(Button view) {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String s= convertTime(""+hourOfDay)+":"+convertTime(""+minute);
+            v.setText(s);
+        }
+
+        public void setView(EditText view) {
             this.v = view;
         }
     }
 
     public void showTimePickerDialog(View v) {
         TimePickerFragment newFragment = new TimePickerFragment();
-        newFragment.setView((Button)v);
+        newFragment.setView((EditText)v);
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
@@ -303,19 +256,19 @@ public class Timetable extends AppCompatActivity
             TimetableFragment m;
             switch (position) {
                 case 0:
-                    m = new TimetableFragment(); m.setDay("Monday"); return m;
+                    m = new TimetableFragment(); m.setDay("Monday",1); return m;
                 case 1:
-                    m = new TimetableFragment(); m.setDay("Tuesday"); return m;
+                    m = new TimetableFragment(); m.setDay("Tuesday",2); return m;
                 case 2:
-                    m = new TimetableFragment(); m.setDay("Wednesday"); return m;
+                    m = new TimetableFragment(); m.setDay("Wednesday",3); return m;
                 case 3:
-                    m = new TimetableFragment(); m.setDay("Thursday"); return m;
+                    m = new TimetableFragment(); m.setDay("Thursday",4); return m;
                 case 4:
-                    m = new TimetableFragment(); m.setDay("Friday"); return m;
+                    m = new TimetableFragment(); m.setDay("Friday",5); return m;
                 case 5:
-                    m = new TimetableFragment(); m.setDay("Saturday"); return m;
+                    m = new TimetableFragment(); m.setDay("Saturday",6); return m;
                 case 6:
-                    m = new TimetableFragment(); m.setDay("Sunday"); return m;
+                    m = new TimetableFragment(); m.setDay("Sunday",7); return m;
                 default:
                     return null;
             }
