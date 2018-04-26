@@ -21,7 +21,7 @@ public class CustomDialogClass extends Dialog implements
     String text;
     String list[];
     int index, quad;
-    private String timings, subjectName, room, day;
+    private String timings, subjectName, room, day, id;
 
     public CustomDialogClass(Activity a) {
         super(a);
@@ -43,11 +43,12 @@ public class CustomDialogClass extends Dialog implements
 
     }
 
-    public void setData(String timings, String subjectName, String room)
+    public void setData(String timings, String subjectName, String room, String id)
     {
         this.timings = timings;
         this.subjectName = subjectName;
         this.room = room;
+        this.id = id;
     }
 
     void setText(String text) {
@@ -79,7 +80,7 @@ public class CustomDialogClass extends Dialog implements
                 ed.show();
                 ed.setDay(day);
                 ed.setIsEdit(true);
-                ed.setData(timings.substring(0,5),timings.substring(8,13),subjectName,room);
+                ed.setData(timings.substring(0,5),timings.substring(8,13),subjectName,room,id);
                 ed.setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
@@ -91,6 +92,7 @@ public class CustomDialogClass extends Dialog implements
                 DeleteDialog dd = new DeleteDialog(c);
                 dd.setDay(day);
                 dd.show();
+                dd.setId(id);
                 dd.setSubjectName(subjectName);
                 dd.setOnDismissListener(new OnDismissListener() {
                     @Override

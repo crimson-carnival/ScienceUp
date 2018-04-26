@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
 import com.vyommaitreya.android.scienceup.database.TimetableContract;
 import com.vyommaitreya.android.scienceup.database.TimetableDbHelper;
@@ -19,8 +21,10 @@ public class DeleteDialog extends Dialog implements
     public Dialog d;
     public Button yes, no;
 
-    private String subjectName, day;
+    private String subjectName, day, id;
     int index, quad;
+
+    DatabaseReference mRef;
 
     public DeleteDialog(Activity a) {
         super(a);
@@ -39,6 +43,8 @@ public class DeleteDialog extends Dialog implements
 
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
+
+        mRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -46,7 +52,8 @@ public class DeleteDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.yes:
                 try {
-                    TimetableDbHelper mDbHelper = new TimetableDbHelper(getContext());
+                    mRef.child("timetable").child(id).removeValue();
+                    /*TimetableDbHelper mDbHelper = new TimetableDbHelper(getContext());
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
                     String selection = TimetableContract.ListEntry.COLUMN_NAME_SUBJECT + " LIKE ? AND " + TimetableContract.ListEntry.COLUMN_NAME_DAY + " LIKE ?";
@@ -55,7 +62,7 @@ public class DeleteDialog extends Dialog implements
 
                     int deletedRows = db.delete(TimetableContract.ListEntry.TABLE_NAME, selection, selectionArgs);
                     db.close();
-                    mDbHelper.close();
+                    mDbHelper.close();*/
                 } catch (Exception e) {
                 }
 
@@ -79,5 +86,9 @@ public class DeleteDialog extends Dialog implements
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

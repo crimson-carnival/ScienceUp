@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class CustomAdapter extends BaseAdapter {
     Context context;
-    String[] time, subject, room;
+    ArrayList<String> time, subject, room;
     LayoutInflater layoutInflater;
-    public CustomAdapter(Context context, String[] time, String[] subject, String[] room)
+    public CustomAdapter(Context context, ArrayList<String> time, ArrayList<String> subject, ArrayList<String> room)
     {
         this.context=context;
         this.time=time;
@@ -22,7 +24,7 @@ public class CustomAdapter extends BaseAdapter {
 
     }
 
-    public void updateData(String[] time, String[] subject, String[] room)
+    public void updateData(ArrayList<String> time, ArrayList<String> subject, ArrayList<String> room)
     {
         this.time=time;
         this.subject=subject;
@@ -32,7 +34,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return time.length;
+        return time.size();
     }
 
     @Override
@@ -49,11 +51,11 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView=layoutInflater.inflate(R.layout.card,null);
         TextView textView=convertView.findViewById(R.id.time);
-        textView.setText(time[position]);
+        textView.setText(time.get(position));
         textView=convertView.findViewById(R.id.subject);
-        textView.setText(subject[position]);
+        textView.setText(subject.get(position));
         textView=convertView.findViewById(R.id.room);
-        textView.setText(room[position]);
+        textView.setText(room.get(position));
         return convertView;
     }
 
