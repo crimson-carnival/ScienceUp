@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "664472256259",
+    "firebase_url": "https://science-up-7b524.firebaseio.com",
+    "project_id": "science-up-7b524",
+    "storage_bucket": "science-up-7b524.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664472256259:android:185099603529e540",
+        "android_client_info": {
+          "package_name": "com.vyommaitreya.android.scienceup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664472256259-lmn7jd4lc9tq7ms11g0tuflaa7i1ch27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vyommaitreya.android.scienceup",
+            "certificate_hash": "ac0956db379468bcf986a52dc2f2695b969fec61"
+          }
+        },
+        {
+          "client_id": "664472256259-oe9g2diikobqu9129jlcgh2hl4as2tq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFhaRPyiOkW9CoHl7YAY_Z5-QppV5AuFk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664472256259-oe9g2diikobqu9129jlcgh2hl4as2tq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

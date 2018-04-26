@@ -11,7 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
+import com.vyommaitreya.android.scienceup.activities.TestArtist;
+import com.vyommaitreya.android.scienceup.database.Timetable;
 import com.vyommaitreya.android.scienceup.database.TimetableContract;
 import com.vyommaitreya.android.scienceup.database.TimetableDbHelper;
 
@@ -25,8 +29,10 @@ public class AddDialogue extends Dialog implements
 
     String list[];
     int index;
-    private String day, subject;
+    private String day, subject, id;
     private boolean isEdit; //To check is dialog is opening as an edit dialog
+
+    DatabaseReference mRef;
 
     public AddDialogue(Activity a) {
         super(a);
@@ -51,6 +57,8 @@ public class AddDialogue extends Dialog implements
         to = findViewById(R.id.edit_text_to);
         subjectName = findViewById(R.id.edit_text_subject_name);
         room = findViewById(R.id.edit_text_room);
+
+        mRef = FirebaseDatabase.getInstance().getReference();
     }
 
     public void setData(String from, String to, String subjectName, String room) {
@@ -74,6 +82,9 @@ public class AddDialogue extends Dialog implements
         switch (v.getId()) {
             case R.id.done:
                 try {
+                    id = mRef.push().getKey();
+                    Timetable artist = new Timetable(id,day.trim(),from.getText().toString().trim() + " - " + to.getText().toString().trim(),subjectName.getText().toString().trim(),room.getText().toString().trim());
+                    mRef.child("timetable").child(id).setValue(artist);
                     /*TimetableDbHelper mDbHelper = new TimetableDbHelper(getContext());
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -88,7 +99,7 @@ public class AddDialogue extends Dialog implements
                     else if(index==6) day="Saturday";
                     else day="Sunday";*/
                     try {
-                        TimetableDbHelper mDbHelper = new TimetableDbHelper(c);
+                        /*TimetableDbHelper mDbHelper = new TimetableDbHelper(c);
                         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
                         if(isEdit) {
@@ -111,6 +122,7 @@ public class AddDialogue extends Dialog implements
 
                         db.close();
                         mDbHelper.close();
+                        */
                     } catch (Exception e) {
                         Toast.makeText(c, "Error writing: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }

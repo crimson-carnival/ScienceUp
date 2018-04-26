@@ -21,6 +21,15 @@ public class CustomAdapter extends BaseAdapter {
         layoutInflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
 
     }
+
+    public void updateData(String[] time, String[] subject, String[] room)
+    {
+        this.time=time;
+        this.subject=subject;
+        this.room=room;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return time.length;

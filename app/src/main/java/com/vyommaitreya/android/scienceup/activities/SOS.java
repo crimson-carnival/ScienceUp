@@ -13,11 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vyommaitreya.android.scienceup.R;
 
 public class SOS extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DatabaseReference myRef;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +36,6 @@ public class SOS extends AppCompatActivity
         setContentView(R.layout.activity_sos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,6 +45,38 @@ public class SOS extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        myRef = FirebaseDatabase.getInstance().getReference();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                id = myRef.push().getKey();
+                TestArtist artist = new TestArtist("Ali3", "Utkarsh");
+                myRef.child("users").child(id).setValue(artist);
+            }
+        });
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    TestArtist artist = ds.getValue(TestArtist.class);
+                    Toast.makeText(SOS.this, artist.name + artist.genre, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Toast.makeText(SOS.this, "Failed", Toast.LENGTH_SHORT).show();
+                // ...
+            }
+        };
+        myRef.child("users").addValueEventListener(postListener);
+
     }
 
     @Override
