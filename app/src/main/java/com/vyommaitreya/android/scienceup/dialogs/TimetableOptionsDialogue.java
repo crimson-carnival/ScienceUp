@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.vyommaitreya.android.scienceup.R;
 
-public class CustomDialogClass extends Dialog implements
+public class TimetableOptionsDialogue extends Dialog implements
         android.view.View.OnClickListener {
 
     public Activity c;
@@ -23,7 +23,7 @@ public class CustomDialogClass extends Dialog implements
     int index, quad;
     private String timings, subjectName, room, day, id;
 
-    public CustomDialogClass(Activity a) {
+    public TimetableOptionsDialogue(Activity a) {
         super(a);
         this.c = a;
     }
@@ -33,7 +33,7 @@ public class CustomDialogClass extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.dialogue);
+        setContentView(R.layout.dialogue_timetable_options);
 
         edit = findViewById(R.id.edit);
         delete = findViewById(R.id.delete);
@@ -76,7 +76,7 @@ public class CustomDialogClass extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.edit:
-                AddDialogue ed = new AddDialogue(c);
+                TimetableAddDialogue ed = new TimetableAddDialogue(c);
                 ed.show();
                 ed.setDay(day);
                 ed.setIsEdit(true);
@@ -89,7 +89,7 @@ public class CustomDialogClass extends Dialog implements
                 });
                 break;
             case R.id.delete:
-                DeleteDialog dd = new DeleteDialog(c);
+                TimetableDeleteDialogue dd = new TimetableDeleteDialogue(c);
                 dd.setDay(day);
                 dd.show();
                 dd.setId(id);

@@ -1,4 +1,4 @@
-package com.vyommaitreya.android.scienceup;
+package com.vyommaitreya.android.scienceup.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,14 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.vyommaitreya.android.scienceup.R;
+
 import java.util.ArrayList;
 
 
-public class CustomAdapter extends BaseAdapter {
+public class TimetableAdapter extends BaseAdapter {
     Context context;
     ArrayList<String> time, subject, room;
     LayoutInflater layoutInflater;
-    public CustomAdapter(Context context, ArrayList<String> time, ArrayList<String> subject, ArrayList<String> room)
+    public TimetableAdapter(Context context, ArrayList<String> time, ArrayList<String> subject, ArrayList<String> room)
     {
         this.context=context;
         this.time=time;
@@ -49,7 +51,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView=layoutInflater.inflate(R.layout.card,null);
+        convertView=layoutInflater.inflate(R.layout.list_component_timetable,null);
         TextView textView=convertView.findViewById(R.id.time);
         textView.setText(time.get(position));
         textView=convertView.findViewById(R.id.subject);

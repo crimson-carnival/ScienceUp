@@ -9,12 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
 import com.vyommaitreya.android.scienceup.database.Timetable;
 
-public class AddDialogue extends Dialog implements
+public class TimetableAddDialogue extends Dialog implements
         android.view.View.OnClickListener {
 
     private Activity c;
@@ -25,8 +26,9 @@ public class AddDialogue extends Dialog implements
 
     private DatabaseReference mRef;
 
-    public AddDialogue(Activity a) {
+    public TimetableAddDialogue(Activity a) {
         super(a);
+        c = a;
         isEdit = false;
     }
 
@@ -35,7 +37,7 @@ public class AddDialogue extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.dialogue_add);
+        setContentView(R.layout.dialogue_timetable_add);
 
         Button done, cancel;
 
@@ -77,7 +79,7 @@ public class AddDialogue extends Dialog implements
 
                     if(!isEdit) id = mRef.push().getKey();
                     Timetable artist = new Timetable(id,day.trim(),from.getText().toString().trim() + " - " + to.getText().toString().trim(),subjectName.getText().toString().trim(),room.getText().toString().trim());
-                    mRef.child("timetable").child(day).child(id).setValue(artist);
+                    mRef.child("timetable").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(day).child(id).setValue(artist);
                 } catch (Exception e) {
                     Toast.makeText(c, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }

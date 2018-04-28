@@ -12,11 +12,32 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vyommaitreya.android.scienceup.R;
+import com.vyommaitreya.android.scienceup.adapters.FeedbackAdapter;
+import com.vyommaitreya.android.scienceup.database.Radio;
+import com.vyommaitreya.android.scienceup.dialogs.FeedbackAddDialogue;
+
+import java.util.ArrayList;
 
 public class Feedback extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ListView mListView;
+    private ProgressBar mProgressBar;
+    private FeedbackAdapter mFeedbackAdapter;
+    private ArrayList<String> mDate, mFeedback, mID;
+    private DatabaseReference mRef;
+    private String userID, new_id;
+    private boolean mClickable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +46,16 @@ public class Feedback extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mRef = FirebaseDatabase.getInstance().getReference();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                new_id = mRef.push().getKey();
+                FeedbackAddDialogue fad = new FeedbackAddDialogue(Feedback.this, new_id, userID);
+                fad.show();
             }
         });
 
@@ -44,6 +69,53 @@ public class Feedback extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.getMenu().getItem(5).setChecked(true);
+
+        mListView = findViewById(R.id.list);
+        mProgressBar = findViewById(R.id.progress_bar);
+
+        mProgressBar.setVisibility(View.VISIBLE);
+        mListView.setVisibility(View.INVISIBLE);
+
+        mDate = new ArrayList<>();
+        mFeedback = new ArrayList<>();
+        mID = new ArrayList<>();
+
+        mFeedbackAdapter = new FeedbackAdapter(this, mDate, mFeedback, mID, userID);
+
+        mListView.setDivider(null);
+        mListView.setAdapter(mFeedbackAdapter);
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mDate.clear();
+                mFeedback.clear();
+                mID.clear();
+                mProgressBar.setVisibility(View.GONE);
+                mListView.setVisibility(View.VISIBLE);
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    com.vyommaitreya.android.scienceup.database.Feedback entry = ds.getValue(com.vyommaitreya.android.scienceup.database.Feedback.class);
+                    mClickable = true;
+                    mDate.add(entry.getDate());
+                    mFeedback.add(entry.getFeedback());
+                    mID.add(entry.getId());
+                }
+
+                if (!mClickable) {
+                    mDate.add("N/A");
+                    mFeedback.add("N/A");
+                    mID.add("N/A");
+                }
+                mFeedbackAdapter.updateData(mDate, mFeedback, mID);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Snackbar.make(mListView, "Unable to fetch data", Snackbar.LENGTH_SHORT).show();
+            }
+        };
+        mRef.child("feedback").child(userID).addValueEventListener(postListener);
     }
 
     @Override

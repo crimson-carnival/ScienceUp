@@ -2,19 +2,17 @@ package com.vyommaitreya.android.scienceup.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
-import com.vyommaitreya.android.scienceup.database.TimetableContract;
-import com.vyommaitreya.android.scienceup.database.TimetableDbHelper;
 
-public class DeleteDialog extends Dialog implements
+public class TimetableDeleteDialogue extends Dialog implements
         android.view.View.OnClickListener {
 
     public Activity c;
@@ -26,7 +24,7 @@ public class DeleteDialog extends Dialog implements
 
     DatabaseReference mRef;
 
-    public DeleteDialog(Activity a) {
+    public TimetableDeleteDialogue(Activity a) {
         super(a);
         this.c = a;
     }
@@ -36,7 +34,7 @@ public class DeleteDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.dialogue_delete);
+        setContentView(R.layout.dialogue_timetable_delete);
 
         yes = findViewById(R.id.yes);
         no = findViewById(R.id.no);
@@ -52,17 +50,7 @@ public class DeleteDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.yes:
                 try {
-                    mRef.child("timetable").child(id).removeValue();
-                    /*TimetableDbHelper mDbHelper = new TimetableDbHelper(getContext());
-                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-                    String selection = TimetableContract.ListEntry.COLUMN_NAME_SUBJECT + " LIKE ? AND " + TimetableContract.ListEntry.COLUMN_NAME_DAY + " LIKE ?";
-
-                    String[] selectionArgs = {subjectName + "", day + ""};
-
-                    int deletedRows = db.delete(TimetableContract.ListEntry.TABLE_NAME, selection, selectionArgs);
-                    db.close();
-                    mDbHelper.close();*/
+                    mRef.child("timetable").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(day).child(id).removeValue();
                 } catch (Exception e) {
                 }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.vyommaitreya.android.scienceup.R;
+
+import java.util.regex.Pattern;
 
 public class Login extends Activity implements
         View.OnClickListener {
@@ -119,6 +122,7 @@ public class Login extends Activity implements
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                            mPasswordField.setError("The username and password combination doesn not exist.");
                             updateUI(null);
                         }
 
@@ -171,6 +175,8 @@ public class Login extends Activity implements
         if (TextUtils.isEmpty(email)) {
             mEmailField.setError("Required.");
             valid = false;
+        } else if(validEmail(email)){
+            mEmailField.setError("Not a valid E-Mail address.");
         } else {
             mEmailField.setError(null);
         }
@@ -184,6 +190,11 @@ public class Login extends Activity implements
         }
 
         return valid;
+    }
+
+    private boolean validEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
     private void updateUI(FirebaseUser user) {
