@@ -2,6 +2,7 @@ package com.vyommaitreya.android.scienceup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -37,6 +38,14 @@ public class SOS extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view,"Replace with your own action",Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -45,38 +54,6 @@ public class SOS extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        myRef = FirebaseDatabase.getInstance().getReference();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                id = myRef.push().getKey();
-                TestArtist artist = new TestArtist("Ali3", "Utkarsh");
-                myRef.child("users").child(id).setValue(artist);
-            }
-        });
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    TestArtist artist = ds.getValue(TestArtist.class);
-                    Toast.makeText(SOS.this, artist.name + artist.genre, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Toast.makeText(SOS.this, "Failed", Toast.LENGTH_SHORT).show();
-                // ...
-            }
-        };
-        myRef.child("users").addValueEventListener(postListener);
-
     }
 
     @Override
@@ -89,10 +66,9 @@ public class SOS extends AppCompatActivity
         }
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

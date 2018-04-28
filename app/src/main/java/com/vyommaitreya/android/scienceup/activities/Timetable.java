@@ -54,9 +54,6 @@ public class Timetable extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,15 +83,6 @@ public class Timetable extends AppCompatActivity
                 });
             }
         });
-
-        /*addDialogue.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                Fragment f = (Fragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mViewPager.getCurrentItem()));
-                f.getFragmentManager().beginTransaction().detach(f).attach(f).commit();
-
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
