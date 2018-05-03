@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
 
 import java.util.regex.Pattern;
@@ -31,6 +33,7 @@ public class Login extends Activity implements
     private EditText mEmailField;
     private EditText mPasswordField;
     private ProgressBar mProgressBar;
+    private DatabaseReference mRef;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -40,6 +43,8 @@ public class Login extends Activity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         // Views
         mEmailField = findViewById(R.id.email);
@@ -81,6 +86,9 @@ public class Login extends Activity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            mRef = FirebaseDatabase.getInstance().getReference();
+                            mRef.child("users").child(user.getUid()).child("email").setValue(user.getEmail());
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.Dashboard"
-    tools:showIn="@layout/activity_dashboard">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,28 +23,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
+                android:layout_weight="1.0"
+                android:padding="0dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                android:layout_weight="1.0">
+                app:cardElevation="4dp">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_chat_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_chat_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_chatroom" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/chat_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_chatroom" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -53,28 +65,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
+                android:layout_weight="1.0"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                android:layout_weight="1.0">
+                app:cardElevation="4dp">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_library_books_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_library_books_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_academics" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/academics_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_academics" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -89,28 +112,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_insert_drive_file_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_insert_drive_file_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_study_material" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/study_material_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_study_material" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -119,28 +151,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_insert_chart_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_insert_chart_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_attendance" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/attendance_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_attendance" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -155,28 +196,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_grid_on_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_grid_on_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_timetable" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/timetable_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_timetable" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -185,28 +235,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_feedback_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_feedback_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_feedback" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/feedback_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_feedback" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -221,28 +280,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_trending_up_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_trending_up_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_trends" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/trends_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_trends" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -251,32 +319,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_radio_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_radio_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_campus_radio" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/campus_radio_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_campus_radio" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -286,28 +364,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_settings_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_settings_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_settings" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/settings_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_settings" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 
@@ -316,28 +403,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
                 android:layout_weight="1.0">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
-                    <ImageView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:background="@color/primaryLightColorTwo"
-                        android:src="@drawable/ic_error_black_24dp"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@color/primaryLightColorTwo"
+                            android:src="@drawable/ic_error_black_24dp"
+                            android:tint="#fff" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="16dp"
+                            android:text="@string/title_activity_sos" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/sos_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
-                        android:text="@string/title_activity_sos" />
-                </LinearLayout>
+                        android:background="@android:color/transparent" />
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.v7.widget.CardView>
 

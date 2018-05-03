@@ -76,10 +76,9 @@ public class TimetableAddDialogue extends Dialog implements
         switch (v.getId()) {
             case R.id.done:
                 try {
-
                     if(!isEdit) id = mRef.push().getKey();
                     Timetable artist = new Timetable(id,day.trim(),from.getText().toString().trim() + " - " + to.getText().toString().trim(),subjectName.getText().toString().trim(),room.getText().toString().trim());
-                    mRef.child("timetable").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(day).child(id).setValue(artist);
+                    mRef.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("timetable").child(day).child(id).setValue(artist);
                 } catch (Exception e) {
                     Toast.makeText(c, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }

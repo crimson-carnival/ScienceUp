@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.dialogs.TimetableAddDialogue;
 import com.vyommaitreya.android.scienceup.fragments.TimetableFragment;
 import com.vyommaitreya.android.scienceup.R;
@@ -46,7 +45,6 @@ public class Timetable extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

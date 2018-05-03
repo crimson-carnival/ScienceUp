@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="301dp"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/background_light">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.RadioAdd"
+    tools:showIn="@layout/activity_radio_add">
 
     <TextView
         android:id="@+id/header"
         style="@style/TextAppearance.AppCompat.Large"
-        android:layout_width="301dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="0dp"
         android:paddingBottom="10dp"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
         android:paddingTop="25dp"
         android:text="Add your own audio"
         android:textColor="@android:color/black" />
 
-        <android.support.design.widget.TextInputLayout
+    <android.support.design.widget.TextInputLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,6 @@
             android:id="@+id/edit_text_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="0dp"
@@ -64,34 +63,31 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/cancel"
-        android:layout_width="150dp"
+        android:id="@+id/upload_btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/description"
-        android:layout_gravity="center"
-        android:background="@android:color/white"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:text="@string/cancel"
-        android:textColor="?attr/colorAccent" />
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:textColor="?attr/colorAccent"
+        android:text="Select Audio"
+        app:layout_constraintTop_toBottomOf="@id/description" />
 
     <Button
         android:id="@+id/done"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/cancel"
-        app:layout_constraintTop_toBottomOf="@+id/description"
-        android:layout_gravity="center"
         android:layout_marginStart="0.5dp"
         android:layout_toEndOf="@+id/cancel"
-        android:background="@android:color/white"
+        android:background="?attr/colorPrimary"
         android:clickable="true"
         android:focusable="true"
         android:paddingBottom="3dp"
         android:paddingTop="3dp"
-        android:text="@string/done"
-        android:textColor="?attr/colorAccent" />
+        android:text="Upload"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

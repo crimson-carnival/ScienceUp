@@ -33,7 +33,7 @@ public class TimetableOptionsDialogue extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.dialogue_timetable_options);
+        setContentView(R.layout.dialogue_options);
 
         edit = findViewById(R.id.edit);
         delete = findViewById(R.id.delete);

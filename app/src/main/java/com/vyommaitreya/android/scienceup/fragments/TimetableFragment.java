@@ -101,7 +101,7 @@ public class TimetableFragment extends Fragment {
                     Snackbar.make(rootView, "Unable to fetch data", Snackbar.LENGTH_SHORT).show();
                 }
             };
-            mRef.child("timetable").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(day).addValueEventListener(postListener);
+            mRef.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("timetable").child(day).addValueEventListener(postListener);
         } catch (Exception e) {
 
         }

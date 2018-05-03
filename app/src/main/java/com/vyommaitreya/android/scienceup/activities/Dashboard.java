@@ -1,34 +1,86 @@
 package com.vyommaitreya.android.scienceup.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
 
-public class Dashboard extends AppCompatActivity {
+public class Dashboard extends AppCompatActivity implements View.OnClickListener {
 
-    CardView chat, academics, study_material, attendance, timetable, feedback, trends, campus_radio, settings, sos;
+    SharedPreferences mSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
+        mSharedPref = Dashboard.this.getSharedPreferences("com.vyommaitreya.android.scienceup", Context.MODE_PRIVATE);
+        if(mSharedPref.getString("username",null) == null) {
+            startActivity(new Intent(Dashboard.this, Settings.class));
+        }
+
+        findViewById(R.id.fab).setOnClickListener(this);
+        findViewById(R.id.chat_btn).setOnClickListener(this);
+        findViewById(R.id.academics_btn).setOnClickListener(this);
+        findViewById(R.id.study_material_btn).setOnClickListener(this);
+        findViewById(R.id.attendance_btn).setOnClickListener(this);
+        findViewById(R.id.timetable_btn).setOnClickListener(this);
+        findViewById(R.id.feedback_btn).setOnClickListener(this);
+        findViewById(R.id.trends_btn).setOnClickListener(this);
+        findViewById(R.id.campus_radio_btn).setOnClickListener(this);
+        findViewById(R.id.settings_btn).setOnClickListener(this);
+        findViewById(R.id.sos).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.chat_btn:
+                startActivity(new Intent(Dashboard.this, Chatroom.class));
+                break;
+            case R.id.academics_btn:
+                startActivity(new Intent(Dashboard.this, Academics.class));
+                break;
+            case R.id.study_material_btn:
+                startActivity(new Intent(Dashboard.this, StudyMaterial.class));
+                break;
+            case R.id.attendance_btn:
+                startActivity(new Intent(Dashboard.this, Attendance.class));
+                break;
+            case R.id.timetable_btn:
+                startActivity(new Intent(Dashboard.this, Timetable.class));
+                break;
+            case R.id.feedback_btn:
+                startActivity(new Intent(Dashboard.this, Feedback.class));
+                break;
+            case R.id.trends_btn:
+                startActivity(new Intent(Dashboard.this, Trends.class));
+                break;
+            case R.id.campus_radio_btn:
+                startActivity(new Intent(Dashboard.this, CampusRadio.class));
+                break;
+            case R.id.settings_btn:
+                startActivity(new Intent(Dashboard.this, Settings.class));
+                break;
+            case R.id.sos_btn:
+                startActivity(new Intent(Dashboard.this, SOS.class));
+                break;
+            case R.id.fab:
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -36,10 +88,8 @@ public class Dashboard extends AppCompatActivity {
                             case DialogInterface.BUTTON_POSITIVE:
                                 //Yes button clicked
 
-                                /*SharedPreferences sharedPref = Dashboard.this.getSharedPreferences("com.vyommaitreya.android.scienceup", Context.MODE_PRIVATE);
-                                sharedPref.edit().putString("username", null).commit();
-                                sharedPref.edit().putString("password", null).commit();
-*/
+                                mSharedPref.edit().putString("username", null).apply();
+
                                 FirebaseAuth.getInstance().signOut();
                                 startActivity(new Intent(Dashboard.this, Login.class));
                                 finish();
@@ -57,109 +107,9 @@ public class Dashboard extends AppCompatActivity {
                         .setNegativeButton("No", dialogClickListener)
                         .setPositiveButton("Yes", dialogClickListener)
                         .show();
-            }
-        });
-
-        chat = findViewById(R.id.chat);
-        academics = findViewById(R.id.academics);
-        study_material = findViewById(R.id.study_material);
-        attendance = findViewById(R.id.attendance);
-        timetable = findViewById(R.id.timetable);
-        feedback = findViewById(R.id.feedback);
-        trends = findViewById(R.id.trends);
-        campus_radio = findViewById(R.id.campus_radio);
-        settings = findViewById(R.id.settings);
-        sos = findViewById(R.id.sos);
-
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Chatroom.class));
-            }
-        });
-
-        academics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Academics.class));
-            }
-        });
-
-        study_material.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, StudyMaterial.class));
-            }
-        });
-
-        attendance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Attendance.class));
-            }
-        });
-
-        timetable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Timetable.class));
-            }
-        });
-
-        feedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Feedback.class));
-            }
-        });
-
-        trends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Trends.class));
-            }
-        });
-
-        campus_radio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, CampusRadio.class));
-            }
-        });
-
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Settings.class));
-            }
-        });
-
-        sos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, SOS.class));
-            }
-        });
-
-        /*final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = true;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
-                    isShow = true;
-                } else if(isShow) {
-                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
-                    isShow = false;
-                }
-            }
-        });*/
+                break;
+            default:
+                break;
+        }
     }
 }

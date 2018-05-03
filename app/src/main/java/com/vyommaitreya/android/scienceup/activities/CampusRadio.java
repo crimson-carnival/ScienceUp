@@ -2,13 +2,11 @@ package com.vyommaitreya.android.scienceup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.vyommaitreya.android.scienceup.R;
-import com.vyommaitreya.android.scienceup.dialogs.RadioAddDialogue;
 import com.vyommaitreya.android.scienceup.fragments.RadioAddFragment;
 import com.vyommaitreya.android.scienceup.fragments.RadioDisplayFragment;
 

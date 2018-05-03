@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vyommaitreya.android.scienceup.R;
 import com.vyommaitreya.android.scienceup.adapters.FeedbackAdapter;
-import com.vyommaitreya.android.scienceup.database.Radio;
 import com.vyommaitreya.android.scienceup.dialogs.FeedbackAddDialogue;
 
 import java.util.ArrayList;
@@ -115,7 +114,7 @@ public class Feedback extends AppCompatActivity
                 Snackbar.make(mListView, "Unable to fetch data", Snackbar.LENGTH_SHORT).show();
             }
         };
-        mRef.child("feedback").child(userID).addValueEventListener(postListener);
+        mRef.child("users").child(userID).child("feedbacks").addValueEventListener(postListener);
     }
 
     @Override

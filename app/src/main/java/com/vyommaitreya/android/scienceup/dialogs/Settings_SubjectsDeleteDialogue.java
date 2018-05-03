@@ -3,6 +3,7 @@ package com.vyommaitreya.android.scienceup.dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -12,19 +13,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.vyommaitreya.android.scienceup.R;
 
-public class TimetableDeleteDialogue extends Dialog implements
+public class Settings_SubjectsDeleteDialogue extends Dialog implements
         android.view.View.OnClickListener {
 
-    public Activity c;
-    public Dialog d;
-    public Button yes, no;
+    private Activity c;
+    private String url;
+    private String id;
 
-    private String subjectName, day, id;
-    int index, quad;
+    private DatabaseReference mRef;
 
-    DatabaseReference mRef;
-
-    public TimetableDeleteDialogue(Activity a) {
+    Settings_SubjectsDeleteDialogue(Activity a) {
         super(a);
         this.c = a;
     }
@@ -36,6 +34,7 @@ public class TimetableDeleteDialogue extends Dialog implements
 
         setContentView(R.layout.dialogue_delete);
 
+        Button yes, no;
         yes = findViewById(R.id.yes);
         no = findViewById(R.id.no);
 
@@ -50,7 +49,7 @@ public class TimetableDeleteDialogue extends Dialog implements
         switch (v.getId()) {
             case R.id.yes:
                 try {
-                    mRef.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("timetable").child(day).child(id).removeValue();
+                    mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("subjects").child(id).removeValue();
                 } catch (Exception e) {
                 }
 
@@ -60,23 +59,9 @@ public class TimetableDeleteDialogue extends Dialog implements
         dismiss();
     }
 
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public void setQuad(int quad) {
-        this.quad = quad;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 }
+
+

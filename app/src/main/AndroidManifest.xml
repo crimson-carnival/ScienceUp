@@ -31,7 +31,7 @@
             android:theme="@style/AppThemeTwo.NoActionBar" />
         <activity
             android:name=".activities.Dashboard"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_dashboard"
             android:theme="@style/AppThemeTwo.NoActionBar" />
         <activity
             android:name=".activities.StudyMaterial"
@@ -98,13 +98,22 @@
         </activity>
         <activity
             android:name=".activities.Login"
-            android:label="@string/title_activity_login2"
+            android:label="@string/app_name"
             android:theme="@style/AppThemeTwo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.RadioAdd"
+            android:label="@string/title_activity_radio_add"
+            android:parentActivityName=".activities.CampusRadio"
+            android:theme="@style/AppThemeTwo.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vyommaitreya.android.scienceup.activities.CampusRadio" />
         </activity>
     </application>
 
