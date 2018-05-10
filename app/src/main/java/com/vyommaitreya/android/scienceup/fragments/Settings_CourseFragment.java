@@ -39,6 +39,9 @@ public class Settings_CourseFragment extends Fragment implements View.OnClickLis
     private ListView mListView;
     private ArrayList<String> mName, mID;
     private StudentsListAdapter mAdapter;
+    private String curr_course;
+    private ArrayAdapter<String> adapter;
+    private TextInputEditText textInputEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -115,33 +118,74 @@ public class Settings_CourseFragment extends Fragment implements View.OnClickLis
             save_course.setVisibility(View.VISIBLE);
             save_course.setOnClickListener(this);
 
-            TextInputEditText textInputEditText  = view.findViewById(R.id.cc);
+            textInputEditText  = view.findViewById(R.id.cc);
             textInputEditText.setText("Will be updated automatically");
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, courses);
-            mSpinner.setAdapter(adapter);
+            try {
+                adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, courses);
+                mSpinner.setAdapter(adapter);
 
-            mRef.child("courses").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    courses.clear();
-                    courseID.clear();
-                    courses.add("Select Course Name");
-                    courseID.add("0");
-                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        courses.add(ds.child("course_name").getValue(String.class));
-                        courseID.add(ds.child("id").getValue(String.class));
+                curr_course = null;
+
+                mRef.child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            curr_course = dataSnapshot.child("course").getValue().toString();
+                            String course_id = dataSnapshot.child("course_ID").getValue().toString();
+                            courses.add(curr_course);
+                            courseID.add(course_id);
+                            adapter.notifyDataSetChanged();
+                            setCourseCoordinator(course_id);
+                        } catch (NullPointerException e) {
+                            selectCourse();
+                        }
+
                     }
-                    adapter.notifyDataSetChanged();
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-
+                    }
+                });
+            } catch (Exception e) { ; }
         }
+    }
+
+    private void setCourseCoordinator(String course_id) {
+        mRef.child("courses").child(course_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                textInputEditText.setText(dataSnapshot.child("course_coordinator").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void selectCourse() {
+        mRef.child("courses").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                courses.clear();
+                courseID.clear();
+                courses.add("Select Course Name");
+                courseID.add("0");
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    courses.add(ds.child("course_name").getValue(String.class));
+                    courseID.add(ds.child("id").getValue(String.class));
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -157,7 +201,7 @@ public class Settings_CourseFragment extends Fragment implements View.OnClickLis
                 }
                 else {
                     String identity = mRef.child("courses").push().getKey();
-                    Course course = new Course(identity, course_name, FirebaseAuth.getInstance().getUid());
+                    Course course = new Course(identity, course_name, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                     mRef.child("courses").child(identity).setValue(course);
                     mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("course").setValue(course);
                     view.setVisibility(View.GONE);
@@ -167,6 +211,7 @@ public class Settings_CourseFragment extends Fragment implements View.OnClickLis
             case R.id.save_course:
                 int course = mSpinner.getSelectedItemPosition();
                 mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("course").setValue(courses.get(course));
+                mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("course_ID").setValue(courseID.get(course));
                 mRef.child("courses").child(courseID.get(course)).child("students").child(FirebaseAuth.getInstance().getUid()).child("id").setValue(FirebaseAuth.getInstance().getUid());
                 mRef.child("courses").child(courseID.get(course)).child("students").child(FirebaseAuth.getInstance().getUid()).child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         }

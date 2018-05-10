@@ -152,14 +152,8 @@ public class Timetable extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_chat) {
-            startActivity(new Intent(this, Chatroom.class));
-            finish();
-        } else if (id == R.id.nav_academics) {
+        if (id == R.id.nav_academics) {
             startActivity(new Intent(this, Academics.class));
-            finish();
-        } else if (id == R.id.nav_content) {
-            startActivity(new Intent(this, StudyMaterial.class));
             finish();
         } else if (id == R.id.nav_attendance) {
             startActivity(new Intent(this, Attendance.class));
@@ -177,6 +171,9 @@ public class Timetable extends AppCompatActivity
             finish();
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, Settings.class));
+            finish();
+        } else if (id == R.id.nav_sos) {
+            startActivity(new Intent(this, SOS.class));
             finish();
         }
 

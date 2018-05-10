@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light">
+
+    <TextView
+        android:id="@+id/header"
+        style="@style/TextAppearance.AppCompat"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="0dp"
+        android:paddingBottom="24dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="24dp"
+        android:text="Mark your presence"
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="@string/cancel"
+        android:textColor="?attr/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="0.5dp"
+        android:layout_toEndOf="@+id/cancel"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="@string/done"
+        android:textColor="?attr/colorAccent"
+        app:layout_constraintStart_toEndOf="@+id/cancel"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+</android.support.constraint.ConstraintLayout>

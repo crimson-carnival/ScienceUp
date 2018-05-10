@@ -2,6 +2,7 @@ package com.vyommaitreya.android.scienceup.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,8 @@ public class Settings_SubjectsFragment extends Fragment implements View.OnClickL
     private boolean mClickable;
     private FirebaseUser mUser;
     private ProgressBar mProgressBar;
+    private FloatingActionButton mFab;
+    private String mCourseId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -51,12 +54,33 @@ public class Settings_SubjectsFragment extends Fragment implements View.OnClickL
         mListView = rootView.findViewById(R.id.list);
         mProgressBar = rootView.findViewById(R.id.progress_bar);
         mRadioAdapter = new RadioAdapter(getContext(), mSubject, mTeacher, mID);
+        mFab = rootView.findViewById(R.id.fab);
+        mFab.setVisibility(View.GONE);
 
-        rootView.findViewById(R.id.fab).setOnClickListener(this);
+        mRef.child("users").child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("category").getValue().toString().equals("teacher")) {
+                    mFab.setOnClickListener(Settings_SubjectsFragment.this);
+                    mFab.setVisibility(View.VISIBLE);
+                    inflateForTeacher();
+                }
+                else {
+                    mCourseId = dataSnapshot.child("course_ID").getValue().toString();
+                    inflateForStudent();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         mListView.setAdapter(mRadioAdapter);
 
-        try {
+        /*try {
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,8 +115,83 @@ public class Settings_SubjectsFragment extends Fragment implements View.OnClickL
             mRef.child("users").child(mUser.getUid()).child("subjects").addValueEventListener(postListener);
         } catch (Exception e) {
 
-        }
+        }*/
+
         return rootView;
+    }
+
+    private void inflateForStudent() {
+        mRef.child("courses").child(mCourseId).child("subjects").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mSubject.clear();
+                mTeacher.clear();
+                mID.clear();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Subject entry = ds.getValue(Subject.class);
+                    mClickable = true;
+                    mSubject.add(entry.getName());
+                    mTeacher.add(entry.getTeacher());
+                    mID.add(entry.getId());
+                }
+
+                if (!mClickable) {
+                    mSubject.add("N/A");
+                    mTeacher.add("N/A");
+                    mID.add("N/A");
+                }
+                mProgressBar.setVisibility(View.GONE);
+
+                mRadioAdapter.updateData(mSubject, mTeacher, mID);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getActivity(), "Unable to fetch data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return;
+    }
+
+    private void inflateForTeacher() {
+        try {
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mSubject.clear();
+                    mTeacher.clear();
+                    mID.clear();
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Subject entry = ds.getValue(Subject.class);
+                        mClickable = true;
+                        mSubject.add(entry.getName());
+                        mTeacher.add("");
+                        mID.add(entry.getId());
+                    }
+
+                    if (!mClickable) {
+                        mSubject.add("N/A");
+                        mTeacher.add("N/A");
+                        mID.add("N/A");
+                    }
+                    mProgressBar.setVisibility(View.GONE);
+
+                    mRadioAdapter.updateData(mSubject, mTeacher, mID);
+                    activateListener();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getActivity(), "Unable to fetch data.", Toast.LENGTH_SHORT).show();
+                }
+            };
+            mRef.child("users").child(mUser.getUid()).child("subjects").addValueEventListener(postListener);
+        } catch (Exception e) {
+
+        }
+        return;
     }
 
 

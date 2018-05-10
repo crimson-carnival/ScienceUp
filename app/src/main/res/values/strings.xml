@@ -9,8 +9,7 @@
 
     <string name="login">Log In</string>
     <string name="sap_id">SAP ID</string>
-    <string name="password">Password</string>
-    <string name="chatroom">Chatroom</string>
+    <string name="password">Password</string>\
     <string name="discussions">Discussions</string>
     <string name="faculty_forums">Faculty Forums</string>
 
@@ -30,9 +29,8 @@
     <string name="title_activity_assignments">Assignments</string>
     <string name="title_activity_test">Test</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Science Up</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_activity_chatroom">Chatroom</string>
 
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">Connecting students and teachers</string>

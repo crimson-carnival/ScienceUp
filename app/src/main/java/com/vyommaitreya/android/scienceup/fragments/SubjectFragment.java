@@ -31,40 +31,7 @@ public class SubjectFragment extends ListFragment {
         final ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
         setListAdapter(adapter);
 
-        if(getActivity().toString().equals("Academics")) {
-            BottomNavigationView navigation = (BottomNavigationView) rootView.findViewById(R.id.navigation);
-            navigation.setOnNavigationItemSelectedListener(
-                    new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-                        @Override
-                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.navigation_assignments:
-                                    break;
-                                case R.id.navigation_grades:
-                                    break;
-                                case R.id.navigation_announcements:
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-        }
-
-        SwipeRefreshLayout mSwipeRefreshLayout;
-        mSwipeRefreshLayout = rootView.findViewById(R.id.linearLayout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.detach(SubjectFragment.this).attach(SubjectFragment.this).commit();
-                    }
-                }, 100);
-            }
-        });
 
         return rootView;
     }

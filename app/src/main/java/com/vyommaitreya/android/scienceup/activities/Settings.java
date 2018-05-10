@@ -59,10 +59,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Settings extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        {
 
     ViewPager mViewPager;
-    BottomNavigationView mBottomNavigationView;
+    private BottomNavigationView mBottomNavigationView;
     private Settings.SectionsPagerAdapter mSectionsPagerAdapter;
     private MenuItem prevMenuItem;
 
@@ -73,16 +73,7 @@ public class Settings extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        navigationView.getMenu().getItem(8).setChecked(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSectionsPagerAdapter = new Settings.SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -136,56 +127,6 @@ public class Settings extends AppCompatActivity
         });
     }
 
-
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_chat) {
-            startActivity(new Intent(this, Chatroom.class));
-            finish();
-        } else if (id == R.id.nav_academics) {
-            startActivity(new Intent(this, Academics.class));
-            finish();
-        } else if (id == R.id.nav_content) {
-            startActivity(new Intent(this, StudyMaterial.class));
-            finish();
-        } else if (id == R.id.nav_attendance) {
-            startActivity(new Intent(this, Attendance.class));
-            finish();
-        } else if (id == R.id.nav_timetable) {
-            startActivity(new Intent(this, Timetable.class));
-            finish();
-        } else if (id == R.id.nav_feedback) {
-            startActivity(new Intent(this, Feedback.class));
-            finish();
-        } else if (id == R.id.nav_trends) {
-            startActivity(new Intent(this, Trends.class));
-            finish();
-        } else if (id == R.id.nav_radio) {
-            startActivity(new Intent(this, CampusRadio.class));
-            finish();
-        } else if (id == R.id.nav_settings) {
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

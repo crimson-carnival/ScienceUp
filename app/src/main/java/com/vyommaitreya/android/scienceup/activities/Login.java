@@ -44,8 +44,6 @@ public class Login extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
         // Views
         mEmailField = findViewById(R.id.email);
         mPasswordField = findViewById(R.id.password);
@@ -58,16 +56,6 @@ public class Login extends Activity implements
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
     }
-
-    // [START on_start_check_user]
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
-    // [END on_start_check_user]
 
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
@@ -179,22 +167,18 @@ public class Login extends Activity implements
     private boolean validateForm() {
         boolean valid = true;
 
-        String email = mEmailField.getText().toString();
+        String email = mEmailField.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             mEmailField.setError("Required.");
             valid = false;
         } else if(validEmail(email)){
             mEmailField.setError("Not a valid E-Mail address.");
-        } else {
-            mEmailField.setError(null);
         }
 
         String password = mPasswordField.getText().toString();
         if (TextUtils.isEmpty(password)) {
             mPasswordField.setError("Required.");
             valid = false;
-        } else {
-            mPasswordField.setError(null);
         }
 
         return valid;

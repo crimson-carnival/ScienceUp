@@ -1,15 +1,15 @@
 package com.vyommaitreya.android.scienceup.database;
 
 public class Subject {
-    private String name, teacher, id;
+    private String name, course, id;
 
     public Subject() {
         ;
     }
 
-    public Subject(String name, String teacher, String id) {
+    public Subject(String name, String course, String id) {
         this.name = name;
-        this.teacher = teacher;
+        this.course = course;
         this.id = id;
     }
 
@@ -28,14 +28,14 @@ public class Subject {
     }
 
     public String getTeacher() {
-        return teacher;
+        return course;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
+    public void setTeacher(String course) {
+        this.course = course;
     }
 }

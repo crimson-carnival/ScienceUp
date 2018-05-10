@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light">
+
+    <TextView
+        android:id="@+id/subject"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Subject Name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/open"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:text="Open Attendance"
+        android:textColor="?attr/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/subject" />
+
+    <Button
+        android:id="@+id/dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/white"
+        android:text="Dismiss"
+        android:textColor="?attr/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/open" />
+
+</android.support.constraint.ConstraintLayout>

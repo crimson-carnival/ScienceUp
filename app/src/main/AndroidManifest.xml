@@ -3,9 +3,7 @@
     package="com.vyommaitreya.android.scienceup">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,29 +16,28 @@
             android:name=".activities.Academics"
             android:label="@string/title_activity_academics"
             android:parentActivityName=".activities.Dashboard"
-            android:theme="@style/AppThemeTwo.NoActionBar" />
+            android:theme="@style/AppThemeTwo.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vyommaitreya.android.scienceup.activities.Dashboard" />
+        </activity>
         <activity
             android:name=".activities.Timetable"
             android:label="@string/title_activity_timetable"
-            android:parentActivityName=".activities.Dashboard"
-            android:theme="@style/AppThemeTwo.NoActionBar" />
-        <activity
-            android:name=".activities.Chatroom"
-            android:label="@string/title_activity_chatroom"
-            android:parentActivityName=".activities.Dashboard"
-            android:theme="@style/AppThemeTwo.NoActionBar" />
-        <activity
-            android:name=".activities.Dashboard"
-            android:label="@string/title_activity_dashboard"
-            android:theme="@style/AppThemeTwo.NoActionBar" />
-        <activity
-            android:name=".activities.StudyMaterial"
-            android:label="@string/title_activity_study_material"
             android:parentActivityName=".activities.Dashboard"
             android:theme="@style/AppThemeTwo.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vyommaitreya.android.scienceup.activities.Dashboard" />
+        </activity>
+        <activity
+            android:name=".activities.Dashboard"
+            android:label="Science Up"
+            android:parentActivityName=".Splash"
+            android:theme="@style/AppThemeTwo.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vyommaitreya.android.scienceup.Splash" />
         </activity>
         <activity
             android:name=".activities.Settings"
@@ -98,13 +95,12 @@
         </activity>
         <activity
             android:name=".activities.Login"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".Splash"
             android:theme="@style/AppThemeTwo">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vyommaitreya.android.scienceup.Splash" />
         </activity>
         <activity
             android:name=".activities.RadioAdd"
@@ -114,6 +110,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vyommaitreya.android.scienceup.activities.CampusRadio" />
+        </activity>
+        <activity android:name=".Splash"
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeTwo.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

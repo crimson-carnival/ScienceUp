@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_assignments"
-        android:icon="@drawable/ic_assignment_black_24dp"
-        android:title="@string/title_activity_assignments" />
-
-    <item
-        android:id="@+id/navigation_grades"
-        android:icon="@drawable/ic_grade_black_24dp"
-        android:title="Grades" />
-
-    <item
         android:id="@+id/navigation_announcements"
         android:icon="@drawable/ic_announcement_black_24dp"
         android:title="@string/title_activity_announcements" />
+
+    <item
+        android:id="@+id/navigation_content"
+        android:icon="@drawable/ic_insert_drive_file_black_24dp"
+        android:title="Content" />
+
+    <item
+        android:id="@+id/navigation_assignments"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        android:title="@string/title_activity_assignments" />
 
 </menu>

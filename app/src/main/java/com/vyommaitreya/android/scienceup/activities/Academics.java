@@ -3,6 +3,7 @@ package com.vyommaitreya.android.scienceup.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.vyommaitreya.android.scienceup.fragments.AcademicsContentFragment;
 import com.vyommaitreya.android.scienceup.fragments.SubjectFragment;
 import com.vyommaitreya.android.scienceup.R;
 
@@ -24,6 +26,8 @@ public class Academics extends AppCompatActivity
 
     private ViewPager mViewPager;
     private Academics.SectionsPagerAdapter mSectionsPagerAdapter;
+    private BottomNavigationView mBottomNavigationView;
+    private MenuItem prevMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,36 +50,55 @@ public class Academics extends AppCompatActivity
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
-
+        mBottomNavigationView = findViewById(R.id.navigation);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-        navigationView.getMenu().getItem(1).setChecked(true);
-
-
-
-        /*navigation.setOnNavigationItemSelectedListener(
+        mBottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.navigation_home:
+                            case R.id.navigation_assignments:
+                                mViewPager.setCurrentItem(2);
+                                break;
+                            case R.id.navigation_announcements:
                                 mViewPager.setCurrentItem(0);
                                 break;
-                            case R.id.navigation_dashboard:
+                            case R.id.navigation_content:
                                 mViewPager.setCurrentItem(1);
-                                break;
-                            case R.id.navigation_notifications:
-                                mViewPager.setCurrentItem(2);
                                 break;
                         }
                         return false;
                     }
-                });*/
+                });
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                }
+                else
+                {
+                    mBottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+
+                mBottomNavigationView.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = mBottomNavigationView.getMenu().getItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        navigationView.getMenu().getItem(2).setChecked(true);
 
         /*Button logoutButton = findViewById(R.id.action_logout);
 
@@ -138,14 +161,8 @@ public class Academics extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_chat) {
-            startActivity(new Intent(this, Chatroom.class));
-            finish();
-        } else if (id == R.id.nav_academics) {
+        if (id == R.id.nav_academics) {
 
-        } else if (id == R.id.nav_content) {
-            startActivity(new Intent(this, StudyMaterial.class));
-            finish();
         } else if (id == R.id.nav_attendance) {
             startActivity(new Intent(this, Attendance.class));
             finish();
@@ -163,6 +180,9 @@ public class Academics extends AppCompatActivity
             finish();
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, Settings.class));
+            finish();
+        } else if (id == R.id.nav_sos) {
+            startActivity(new Intent(this, SOS.class));
             finish();
         }
 
@@ -185,12 +205,8 @@ public class Academics extends AppCompatActivity
                 case 0:
                     return new SubjectFragment();
                 case 1:
-                    return new SubjectFragment();
+                    return new AcademicsContentFragment();
                 case 2:
-                    return new SubjectFragment();
-                case 3:
-                    return new SubjectFragment();
-                case 4:
                     return new SubjectFragment();
                 default:
                     return null;
@@ -200,8 +216,8 @@ public class Academics extends AppCompatActivity
 
         @Override
         public int getCount() {
-            // Show 5 total pages.
-            return 5;
+            // Show 3 total pages.
+            return 3;
         }
     }
 }
