@@ -78,7 +78,6 @@
         android:id="@+id/done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0.5dp"
         android:layout_toEndOf="@+id/cancel"
         android:background="?attr/colorPrimary"
         android:clickable="true"

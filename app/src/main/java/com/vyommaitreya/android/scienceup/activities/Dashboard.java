@@ -31,7 +31,8 @@ public class Dashboard extends AppCompatActivity implements View.OnClickListener
 
         mSharedPref = Dashboard.this.getSharedPreferences("com.vyommaitreya.android.scienceup", Context.MODE_PRIVATE);
         if(mSharedPref.getString("username",null) == null) {
-            startActivity(new Intent(Dashboard.this, Settings.class));
+            startActivity(new Intent(Dashboard.this, FirstAfterLogin.class));
+            finish();
         }
 
         findViewById(R.id.fab).setOnClickListener(this);

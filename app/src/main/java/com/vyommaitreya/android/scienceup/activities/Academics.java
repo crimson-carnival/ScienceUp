@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,8 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.vyommaitreya.android.scienceup.fragments.AcademicsAnnouncementsFragment;
+import com.vyommaitreya.android.scienceup.fragments.AcademicsAssignmentsFragment;
 import com.vyommaitreya.android.scienceup.fragments.AcademicsContentFragment;
-import com.vyommaitreya.android.scienceup.fragments.SubjectFragment;
 import com.vyommaitreya.android.scienceup.R;
 
 public class Academics extends AppCompatActivity
@@ -203,11 +203,11 @@ public class Academics extends AppCompatActivity
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new SubjectFragment();
+                    return new AcademicsAnnouncementsFragment();
                 case 1:
                     return new AcademicsContentFragment();
                 case 2:
-                    return new SubjectFragment();
+                    return new AcademicsAssignmentsFragment();
                 default:
                     return null;
             }

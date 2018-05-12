@@ -60,15 +60,16 @@ public class Settings_SubjectsFragment extends Fragment implements View.OnClickL
         mRef.child("users").child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("category").getValue().toString().equals("teacher")) {
-                    mFab.setOnClickListener(Settings_SubjectsFragment.this);
-                    mFab.setVisibility(View.VISIBLE);
-                    inflateForTeacher();
-                }
-                else {
-                    mCourseId = dataSnapshot.child("course_ID").getValue().toString();
-                    inflateForStudent();
-                }
+                try {
+                    if (dataSnapshot.child("category").getValue().toString().equals("teacher")) {
+                        mFab.setOnClickListener(Settings_SubjectsFragment.this);
+                        mFab.setVisibility(View.VISIBLE);
+                        inflateForTeacher();
+                    } else {
+                        mCourseId = dataSnapshot.child("course_ID").getValue().toString();
+                        inflateForStudent();
+                    }
+                } catch (Exception e) {;}
             }
 
             @Override
@@ -197,14 +198,14 @@ public class Settings_SubjectsFragment extends Fragment implements View.OnClickL
 
     void activateListener() {
         if (mClickable) {
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Settings_SubjectsOptionsDialogue settingsSubjectsOptionsDialogue = new Settings_SubjectsOptionsDialogue(getActivity());
                     settingsSubjectsOptionsDialogue.setId(mID.get(i));
                     settingsSubjectsOptionsDialogue.show();
                 }
-            });
+            });*/
         }
     }
 

@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.vyommaitreya.android.scienceup.R;
 import com.vyommaitreya.android.scienceup.adapters.FeedbackAdapter;
 import com.vyommaitreya.android.scienceup.adapters.StudentsListAdapter;
+import com.vyommaitreya.android.scienceup.database.Attendance;
 import com.vyommaitreya.android.scienceup.database.Course;
 import com.vyommaitreya.android.scienceup.database.Student;
 
@@ -214,6 +215,36 @@ public class Settings_CourseFragment extends Fragment implements View.OnClickLis
                 mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("course_ID").setValue(courseID.get(course));
                 mRef.child("courses").child(courseID.get(course)).child("students").child(FirebaseAuth.getInstance().getUid()).child("id").setValue(FirebaseAuth.getInstance().getUid());
                 mRef.child("courses").child(courseID.get(course)).child("students").child(FirebaseAuth.getInstance().getUid()).child("name").setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                mRef.child("courses").child(courseID.get(course)).child("subjects").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Object o = dataSnapshot.getValue(Object.class);
+                        mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("subjects").setValue(o);
+                        addAttendance();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
         }
+    }
+
+    private void addAttendance() {
+        mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("subjects").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Attendance attendance = new Attendance(0, 0);
+                    mRef.child("users").child(FirebaseAuth.getInstance().getUid()).child("subjects").child(ds.getKey()).child("attendance").setValue(attendance);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

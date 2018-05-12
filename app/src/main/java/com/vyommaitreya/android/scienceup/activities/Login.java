@@ -191,7 +191,7 @@ public class Login extends Activity implements
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            startActivity(new Intent(Login.this, Dashboard.class));
+            startActivity(new Intent(Login.this, FirstAfterLogin.class));
             finish();
         }
     }

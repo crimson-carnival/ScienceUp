@@ -7,15 +7,6 @@
     tools:context="com.vyommaitreya.android.scienceup.activities.Academics">
 
     <ListView
-        android:id="@id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin" />
-
-    <ListView
         android:visibility="gone"
         android:id="@+id/list"
         android:layout_width="match_parent"

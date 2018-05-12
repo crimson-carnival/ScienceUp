@@ -69,7 +69,7 @@ public class AcademicsContentFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_subject, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_academics_share, container, false);
         view = rootView;
 
         if (ContextCompat.checkSelfPermission(getContext(),

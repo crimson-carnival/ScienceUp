@@ -60,6 +60,7 @@ public class Trends extends AppCompatActivity
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mAdapter = new TrendsAdapter(Trends.this,mLinks);
         mListView.setAdapter(mAdapter);
+        mListView.setDivider(null);
         mRef.child("users").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

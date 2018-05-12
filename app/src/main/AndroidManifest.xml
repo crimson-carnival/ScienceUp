@@ -111,7 +111,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vyommaitreya.android.scienceup.activities.CampusRadio" />
         </activity>
-        <activity android:name=".Splash"
+        <activity
+            android:name=".Splash"
             android:label="@string/app_name"
             android:theme="@style/AppThemeTwo.NoActionBar">
             <intent-filter>
@@ -119,6 +120,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.FirstAfterLogin"
+            android:label="@string/title_activity_first_after_login"
+            android:parentActivityName=".activities.Login"
+            android:theme="@style/AppThemeTwo.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vyommaitreya.android.scienceup.activities.Login" />
         </activity>
     </application>
 

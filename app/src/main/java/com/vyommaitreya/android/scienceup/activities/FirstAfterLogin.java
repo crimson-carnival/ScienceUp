@@ -1,4 +1,4 @@
-package com.vyommaitreya.android.scienceup.fragments;
+package com.vyommaitreya.android.scienceup.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,7 +11,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -27,20 +29,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.vyommaitreya.android.scienceup.R;
-import com.vyommaitreya.android.scienceup.activities.Settings;
 
 import java.io.IOException;
 
-import static android.app.Activity.RESULT_OK;
-
-public class Settings_ProfileFragment extends Fragment implements View.OnClickListener {
+public class FirstAfterLogin extends AppCompatActivity implements View.OnClickListener {
 
     private final static int IMAGE_CODE = 999;
 
@@ -53,21 +55,25 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
     private ProgressBar mProgressBar;
     private LinearLayout mLinearLayout;
     private DatabaseReference mRef;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_settings_profile, container, false);
+    private String mCategory;
 
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_first_after_login);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference();
-        mDisplayName = rootView.findViewById(R.id.display_name);
-        mDisplayImage = rootView.findViewById(R.id.display_image);
-        mEmail = rootView.findViewById(R.id.email);
-        mProgressBar = rootView.findViewById(R.id.progress_bar);
+        mDisplayName = findViewById(R.id.display_name);
+        mDisplayImage = findViewById(R.id.display_image);
+        mEmail = findViewById(R.id.email);
+        mProgressBar = findViewById(R.id.progress_bar);
 
         fab.setOnClickListener(this);
         mDisplayImage.setOnClickListener(this);
@@ -79,9 +85,22 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
                     .into(mDisplayImage);
         }
         if (mUser.getEmail() != null) mEmail.setText(mUser.getEmail());
-        mProgressBar.setVisibility(View.GONE);
+        mRef.child("users").child(mUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mCategory = dataSnapshot.child("category").getValue(String.class);
+                if(mCategory!=null) {
+                    findViewById(R.id.radio_group).setVisibility(View.GONE);
+                    findViewById(R.id.text_prompt).setVisibility(View.GONE);
+                }
+                mProgressBar.setVisibility(View.GONE);
+            }
 
-        return rootView;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -90,17 +109,21 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
 
         switch (id) {
             case R.id.fab:
-                if (isUsernameSet()) {
+                if (isUsernameSet() && isCategorySet()) {
                     UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                             .setDisplayName(mDisplayName.getText().toString())
                             .build();
                     mUser.updateProfile(request);
 
                     mRef.child("users").child(mUser.getUid()).child("name").setValue(mDisplayName.getText().toString());
-                    Snackbar.make(view,"Display name updated.",Snackbar.LENGTH_SHORT).show();
+                    mRef.child("users").child(mUser.getUid()).child("category").setValue(mCategory);
+                    Toast.makeText(this, "Information updated", Toast.LENGTH_SHORT).show();
 
-                    SharedPreferences sharedPref = getActivity().getSharedPreferences("com.vyommaitreya.android.scienceup", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = FirstAfterLogin.this.getSharedPreferences("com.vyommaitreya.android.scienceup", Context.MODE_PRIVATE);
                     sharedPref.edit().putString("username", mUser.getUid()).apply();
+
+                    startActivity(new Intent(FirstAfterLogin.this, Dashboard.class));
+                    finish();
                 }
                 break;
             case R.id.display_image:
@@ -115,6 +138,23 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
 
     }
 
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch (view.getId()) {
+            case R.id.radio_student:
+                if (checked)
+                    // Pirates are the best
+                    mCategory = "student";
+                break;
+            case R.id.radio_teacher:
+                if (checked)
+                    // Ninjas rule
+                    mCategory = "teacher";
+                break;
+        }
+    }
+
     boolean isUsernameSet() {
         if (mDisplayName.getText().toString().length() == 0) {
             mDisplayName.setError("You need to provide a display name");
@@ -122,6 +162,15 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
             return false;
         } else return true;
     }
+
+    boolean isCategorySet() {
+        if(mCategory == null) {
+            Snackbar.make(findViewById(R.id.radio_student),"Please select a category",Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -137,7 +186,7 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
         mProgressBar.setVisibility(View.VISIBLE);
 
         if (mProfileImage != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            final ProgressDialog progressDialog = new ProgressDialog(FirstAfterLogin.this);
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
@@ -156,12 +205,12 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
                                 public void onSuccess(Void aVoid) {
                                     Bitmap bitmap = null;
                                     try {
-                                        bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mProfileImage);
+                                        bitmap = MediaStore.Images.Media.getBitmap(FirstAfterLogin.this.getContentResolver(), mProfileImage);
                                         mDisplayImage.setImageBitmap(bitmap);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    Toast.makeText(getActivity(), "Profile picture updated", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FirstAfterLogin.this, "Profile picture updated", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             progressDialog.dismiss();
@@ -174,7 +223,7 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
                             // ...
                             mProgressBar.setVisibility(View.GONE);
                             progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Upload failed " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FirstAfterLogin.this, "Upload failed " + exception.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -189,4 +238,5 @@ public class Settings_ProfileFragment extends Fragment implements View.OnClickLi
                     });
         }
     }
+
 }

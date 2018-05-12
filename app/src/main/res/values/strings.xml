@@ -93,4 +93,5 @@
     </string>
     <string name="title_activity_radio_add">RadioAdd</string>
     <string name="title_activity_settings__test">Settings_Test</string>
+    <string name="title_activity_first_after_login">Basic Information</string>
 </resources>
