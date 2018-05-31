@@ -61,6 +61,7 @@ public class AttendanceTeacherDialogue extends Dialog implements
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         int total = dataSnapshot.getValue(Integer.class);
+                                        //Total number or classes held increment
                                         mRef.child("users").child(uid).child("subjects").child(mSubjectID).child("attendance").child("total").setValue(total+1);
                                     }
 
